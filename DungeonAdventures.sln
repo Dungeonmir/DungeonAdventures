@@ -7,16 +7,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DungeonAdventures", "Dungeo
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Debug|Win32.ActiveCfg = Debug|x64
+		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Debug|Win32.Build.0 = Debug|x64
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Debug|x64.ActiveCfg = Debug|x64
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Debug|x64.Build.0 = Debug|x64
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Debug|x86.ActiveCfg = Debug|Win32
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Debug|x86.Build.0 = Debug|Win32
+		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Release|Win32.ActiveCfg = Release|Win32
+		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Release|Win32.Build.0 = Release|Win32
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Release|x64.ActiveCfg = Release|x64
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Release|x64.Build.0 = Release|x64
 		{229E5103-81F9-4656-A151-A3C3E9A5CFCB}.Release|x86.ActiveCfg = Release|Win32

@@ -2,10 +2,10 @@
 #include <conio.h>
 #include <windows.h>
 
-
+#include "include/soloud.h"
+#include "soloud_thread.h"
+#include "soloud_wav.h"
 using namespace std;
-
-
 
 
 bool stop = false;
@@ -25,22 +25,19 @@ void hideCursor()
 
 
 
-	system("mode con cols=150 lines=50"); //ðàçìåð îêíà, âûâîä íóæíîãî êîëè÷åñòâà ñòðîê â êîíñîëü
+	system("mode con cols=150 lines=50"); 
 	HANDLE  hout = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
 
 
-	//óáèhàåò âûäàëåíèå â êîíñîëå
 	HANDLE hConsole = GetStdHandle(STD_INPUT_HANDLE);
 	DWORD prevConsoleMode = 0;
 	GetConsoleMode(hConsole, &prevConsoleMode);
 	SetConsoleMode(hConsole, prevConsoleMode & ~ENABLE_QUICK_EDIT_MODE);
 
 
-	///çàïðåò íà èçìåíåíèå ðàçìåðà êîíñîëè
-	HWND consoleWindow = GetConsoleWindow();
-	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+	
 }
 
 
@@ -107,11 +104,20 @@ void step() {
 }
 int main()
 {
+	SoLoud::Soloud soloud;  // SoLoud engine core
+
+	SoLoud::Wav gWave;      // One wave file
+
+	soloud.init();
+
+	gWave.load("audio/darlsouls.ogg"); // Load a wave
+	soloud.play(gWave); // Play the wave
+	
 	system("color 30");
 	hideCursor();
 	goto_x_y(hero_x, hero_y);
 	printf("%c", hero_char);
-
+	
 
 	char key;
 	while (stop == false)
@@ -120,9 +126,11 @@ int main()
 		{
 			key = _getch();
 			hero_move(key);
+			soloud.play(gWave);
 		}
 		step();
 	}
+	soloud.deinit();
 	return 0;
 }
 
