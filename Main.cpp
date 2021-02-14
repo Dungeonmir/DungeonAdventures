@@ -6,12 +6,10 @@
 using namespace std;
 
 
-
-
 bool stop = false;
 char hero_char = 254;
-int hero_x = 50;
-int hero_y = 24;
+int hero_x = 75;
+int hero_y = 25;
 
 
 void hideCursor()
@@ -24,21 +22,21 @@ void hideCursor()
 
 
 
-
-	system("mode con cols=150 lines=50"); //ðàçìåð îêíà, âûâîä íóæíîãî êîëè÷åñòâà ñòðîê â êîíñîëü
+	//Изменение размера консоли
+	system("mode con cols=150 lines=50"); 
 	HANDLE  hout = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
 
 
-	//óáèhàåò âûäàëåíèå â êîíñîëå
+	//Запрещает выделение
 	HANDLE hConsole = GetStdHandle(STD_INPUT_HANDLE);
 	DWORD prevConsoleMode = 0;
 	GetConsoleMode(hConsole, &prevConsoleMode);
 	SetConsoleMode(hConsole, prevConsoleMode & ~ENABLE_QUICK_EDIT_MODE);
 
 
-	///çàïðåò íà èçìåíåíèå ðàçìåðà êîíñîëè
+	//Запрещает изменение размера окна
 	HWND consoleWindow = GetConsoleWindow();
 	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
 }
@@ -62,8 +60,8 @@ void hero_move(char key)
 		hero_y--;
 		goto_x_y(hero_x, hero_y);
 
-
 		break;
+
 	case 'a':
 	case 'A':
 		printf("\b");
@@ -71,8 +69,8 @@ void hero_move(char key)
 		hero_x -= 2;
 		goto_x_y(hero_x, hero_y);
 
-
 		break;
+
 	case 's':
 	case 'S':
 		printf("\b");
@@ -89,15 +87,10 @@ void hero_move(char key)
 		hero_x += 2;
 		goto_x_y(hero_x, hero_y);
 
-
 		break;
 
-
-
-
-
-
 	case 27: stop = true;
+
 		break;
 	}
 }
