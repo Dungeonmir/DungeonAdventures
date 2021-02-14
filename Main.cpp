@@ -10,8 +10,8 @@ using namespace std;
 
 bool stop = false;
 char hero_char = 254;
-int hero_x = 50;
-int hero_y = 24;
+int hero_x = 75;
+int hero_y = 25;
 
 
 void hideCursor()
@@ -59,8 +59,8 @@ void hero_move(char key)
 		hero_y--;
 		goto_x_y(hero_x, hero_y);
 
-
 		break;
+
 	case 'a':
 	case 'A':
 		printf("\b");
@@ -68,8 +68,8 @@ void hero_move(char key)
 		hero_x -= 2;
 		goto_x_y(hero_x, hero_y);
 
-
 		break;
+
 	case 's':
 	case 'S':
 		printf("\b");
@@ -86,15 +86,10 @@ void hero_move(char key)
 		hero_x += 2;
 		goto_x_y(hero_x, hero_y);
 
-
 		break;
 
-
-
-
-
-
 	case 27: stop = true;
+
 		break;
 	}
 }
