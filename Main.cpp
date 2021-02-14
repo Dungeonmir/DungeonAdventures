@@ -1,11 +1,11 @@
-﻿#include <iostream>
+﻿#define NOMINMAX
+#include <iostream>
 #include <conio.h>
 #include <windows.h>
-
-#include "include/soloud.h"
+#include <libtcod.hpp>
+#include "soloud.h"
 #include "soloud_thread.h"
 #include "soloud_wav.h"
-using namespace std;
 
 
 bool stop = false;
@@ -108,23 +108,23 @@ int main()
 	gWave.load("audio/darlsouls.ogg"); // Load a wave
 	soloud.play(gWave); // Play the wave
 	
-	system("color 30");
-	hideCursor();
-	goto_x_y(hero_x, hero_y);
-	printf("%c", hero_char);
-	
-
-	char key;
-	while (stop == false)
-	{
-		if (_kbhit())
-		{
-			key = _getch();
-			hero_move(key);
-			soloud.play(gWave);
+	int playerx = 40, playery = 25;
+	TCODConsole::initRoot(80, 50, "libtcod C++ tutorial", false);
+	while (!TCODConsole::isWindowClosed()) {
+		TCOD_key_t key;
+		TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
+		switch (key.vk) {
+		case TCODK_UP: playery--; break;
+		case TCODK_DOWN: playery++; break;
+		case TCODK_LEFT: playerx--; break;
+		case TCODK_RIGHT: playerx++; break;
+		default:break;
 		}
-		step();
+		TCODConsole::root->clear();
+		TCODConsole::root->putChar(playerx, playery, '@');
+		TCODConsole::flush();
 	}
+	
 	soloud.deinit();
 	return 0;
 }
