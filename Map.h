@@ -13,8 +13,9 @@ int width, height;
     ~Map();
     bool isWall(int x, int y) const;
     void render() const;
+    void setWall(int x, int y);
 protected:
     Tile* tiles;
 
-    void setWall(int x, int y);
+    
 };

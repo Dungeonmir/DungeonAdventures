@@ -5,6 +5,7 @@
 #include "soloud_wav.h" 
 #include "Map.h" // Заголовочный файл Карты
 #include <stdlib.h> // Для ESC
+#include <iostream>
 
 int main() {
     SoLoud::Soloud soloud;  // SoLoud engine core
@@ -15,29 +16,46 @@ int main() {
 
     int playerx = 40, playery = 25;
     TCODConsole::initRoot(80, 50, "DyabloLR", false);
-
+    Map level1(80, 50);
     while (!TCODConsole::isWindowClosed()) {
+
     TCOD_key_t key;
     TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
     switch (key.vk) {
         case TCODK_UP: 
-                playery--; 
+            if (!level1.isWall(playerx, playery - 1))
+            {
+                playery--;
+            }
             break;
         case TCODK_DOWN:
-                playery++; 
+            if (!level1.isWall(playerx, playery + 1))
+            {
+                playery++;
+            }
             break;
-        case TCODK_LEFT: 
+        case TCODK_LEFT:
+            if (!level1.isWall(playerx - 1,playery))
+            {
                 playerx--;
+            }
+               
             break;
-        case TCODK_RIGHT: 
-                playerx++; 
+        case TCODK_RIGHT:
+            if (!level1.isWall(playerx + 1, playery))
+            {
+                playerx++;
+            }
             break;
         case TCODK_ESCAPE:
             exit(0);
             default:break;
             }
             TCODConsole::root->clear();
-            TCODConsole::root->putChar(playerx, playery, 109);
+            level1.render();
+            
+            TCODConsole::root->putChar(playerx, playery, '@');
+
             TCODConsole::flush();
         }
         return 0;
