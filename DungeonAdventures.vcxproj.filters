@@ -27,6 +27,12 @@
     <ClCompile Include="map.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -35,6 +41,9 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClInclude Include="Sound.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">

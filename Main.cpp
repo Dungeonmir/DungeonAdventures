@@ -1,63 +1,60 @@
 ﻿#define NOMINMAX
 #include <libtcod.hpp>
+#include <stdlib.h> // Для ESC
+#include <iostream>
+#include <SDL.h> //SDL2 renderer
+#undef main // !DANGER SDL.h has conflict with SDL_main.h!
+
 #include "soloud.h" // Отвечает за музыку
 #include "soloud_thread.h"
 #include "soloud_wav.h" 
 #include "Map.h" // Заголовочный файл Карты
-#include <stdlib.h> // Для ESC
-#include <iostream>
 
-int main() {
+int main(int argc, char* argv[]) {
     SoLoud::Soloud soloud;  // SoLoud engine core
     SoLoud::Wav gWave;      // One wave file
     soloud.init();
     gWave.load("audio/darlsouls.ogg"); // Load a wave
     soloud.play(gWave); // Play the wave
+    
+    TCOD_tileset_load_truetype_("RobotoSlab-Medium.ttf", 32, 32);
+    tcod::ConsolePtr console = tcod::new_console(30, 20);
+    TCOD_ContextParams params = {}; //Struct for creating context
+    params.tcod_version = TCOD_COMPILEDVERSION; // Required 
+    params.columns = console->w; //Set console window size = console size
+    params.rows = console->h;
+    params.renderer_type = TCOD_RENDERER_SDL2;
+    params.vsync = true;
+    params.argc = argc; // This allows some user-control of the context.
+    params.argv = argv;
+    tcod::ContextPtr context = tcod::new_context(params);
+    
 
-    int playerx = 40, playery = 25;
-    TCODConsole::initRoot(80, 50, "DyabloLR", false);
-    Map level1(80, 50);
-    while (!TCODConsole::isWindowClosed()) {
+        Map level1(80, 50);
+        while (!TCODConsole::isWindowClosed()) {
 
-    TCOD_key_t key;
-    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
-    switch (key.vk) {
-        case TCODK_UP: 
-            if (!level1.isWall(playerx, playery - 1))
-            {
-                playery--;
+            SDL_Event event;
+            while (SDL_PollEvent(&event) != 0) {
+                switch (event.key.keysym.sym) {
+                case SDL_QUIT:
+                case SDLK_ESCAPE:
+                    soloud.deinit();
+                    console.release();
+                    return 0;
+                }
             }
-            break;
-        case TCODK_DOWN:
-            if (!level1.isWall(playerx, playery + 1))
-            {
-                playery++;
-            }
-            break;
-        case TCODK_LEFT:
-            if (!level1.isWall(playerx - 1,playery))
-            {
-                playerx--;
-            }
-               
-            break;
-        case TCODK_RIGHT:
-            if (!level1.isWall(playerx + 1, playery))
-            {
-                playerx++;
-            }
-            break;
-        case TCODK_ESCAPE:
-            exit(0);
-            default:break;
-            }
-            TCODConsole::root->clear();
+
+            TCOD_console_clear(console.get());
             level1.render();
             
-            TCODConsole::root->putChar(playerx, playery, '@');
-
-            TCODConsole::flush();
+            const TCOD_color_t back = {100, 50, 60};
+            const TCOD_color_t* backi = &back;
+            
+            tcod::print(*console, 0, 0, "Line", nullptr, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
+            
+            context->present(*console); // Updates the visible display.
+            
         }
+        soloud.deinit();
         return 0;
-    }
-
+}
