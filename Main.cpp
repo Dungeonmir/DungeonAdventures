@@ -1,9 +1,10 @@
 ﻿#define NOMINMAX
 #include <libtcod.hpp>
-#include "soloud.h"
+#include "soloud.h" // Отвечает за музыку
 #include "soloud_thread.h"
-#include "soloud_wav.h"
-#include "Map.h"
+#include "soloud_wav.h" 
+#include "Map.h" // Заголовочный файл Карты
+#include <stdlib.h> // Для ESC
 
 int main() {
     SoLoud::Soloud soloud;  // SoLoud engine core
@@ -31,10 +32,12 @@ int main() {
         case TCODK_RIGHT: 
                 playerx++; 
             break;
+        case TCODK_ESCAPE:
+            exit(0);
             default:break;
             }
             TCODConsole::root->clear();
-            TCODConsole::root->putChar(playerx, playery, '@');
+            TCODConsole::root->putChar(playerx, playery, 109);
             TCODConsole::flush();
         }
         return 0;
