@@ -24,20 +24,31 @@ int main()
 		TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
 		switch (key.vk) {
 		case TCODK_UP:
-			playery--; break;
+			playery--;
+
+				break;
+
 		case TCODK_DOWN: 
-			playery++; break;
+			playery++; 
+
+				break;
+
 		case TCODK_LEFT: 
-			playerx--; break;
+			playerx--;
+
+				break;
+
 		case TCODK_RIGHT: 
-			playerx++; break;
+			playerx++; 
+
+				break;
+
 		default:break;
 		}
 		TCODConsole::root->clear();
 		TCODConsole::root->putChar(playerx, playery, '@');
 		TCODConsole::flush();
 	}
-	
 	soloud.deinit();
 	return 0;
 }
