@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
                 switch (event.key.keysym.sym) {
                 case SDL_QUIT:
                 case SDLK_ESCAPE:
+                    gWave.~Wav();
                     soloud.deinit();
                     console.release();
                     return 0;
