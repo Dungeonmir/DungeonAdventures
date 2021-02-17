@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     gWave.load("audio/darlsouls.ogg"); // Load a wave
     soloud.play(gWave); // Play the wave
     
-    TCOD_tileset_load_truetype_("RobotoSlab-Medium.ttf", 32, 32);
+    TCOD_tileset_load_truetype_("font/RobotoSlab-Medium.ttf", 32, 32);
     tcod::ConsolePtr console = tcod::new_console(30, 20);
     TCOD_ContextParams params = {}; //Struct for creating context
     params.tcod_version = TCOD_COMPILEDVERSION; // Required 

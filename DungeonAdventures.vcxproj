@@ -83,11 +83,16 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>include/SDL2;lib;include;$(IncludePath)</IncludePath>
     <LibraryPath>lib;$(LibraryPath)</LibraryPath>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>include/SDL2;lib;include;$(IncludePath)</IncludePath>
     <LibraryPath>lib;$(LibraryPath)</LibraryPath>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
+    <OutDir>bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -174,10 +179,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sound.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DungeonAdventures.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
