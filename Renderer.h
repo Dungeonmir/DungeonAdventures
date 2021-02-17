@@ -4,7 +4,11 @@
 class RenderWindow {
 public:
     void init(int argc, char* argv[]);
-    
+
+    ~RenderWindow() {
+        context.release();
+        console.release();
+    }
     void print(int x, int y, std::string text, TCOD_color_t* foreground, TCOD_color_t* background, TCOD_bkgnd_flag_t flag) {
         tcod::print(*console, x, y, text, foreground, background, flag, TCOD_LEFT);
     }
