@@ -18,6 +18,11 @@ public:
     void print(int x, int y, std::string text) {
         tcod::print(*console, x, y, text, nullptr, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
     }
+    /*Print char*/
+    void print(int x, int y, char ch) {
+        std::string str(1, ch);
+        tcod::print(*console, x, y, str, nullptr, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
+    }
     void clear() {
         TCOD_console_clear(console.get());
     }

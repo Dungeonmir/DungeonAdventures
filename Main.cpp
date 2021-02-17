@@ -9,6 +9,7 @@
 
 #include "Map.h" // Заголовочный файл Карты
 #include "Renderer.h"
+#include "Actor.h"
 
 int main(int argc, char* argv[]) {
     
@@ -17,6 +18,7 @@ int main(int argc, char* argv[]) {
     console.init(argc,argv);
     
         Map level1(80, 50);
+        Actor hero(8, 5, 'H');
         while (!TCODConsole::isWindowClosed()) {
 
             SDL_Event event;
@@ -30,7 +32,7 @@ int main(int argc, char* argv[]) {
             console.clear();
             level1.render(&console);
             
-            
+            hero.render(&console);
             
             console.print(0, 0, "Here it is. The code ////");
             

@@ -1,11 +1,12 @@
 #pragma once
 #include <libtcod.hpp>
+#include "Renderer.h"
 class Actor {
 public:
 	int x, y; // actor position
-	int ch;  // character symbol
+	char ch;  // character symbol
 	TCODColor color;
 
-	Actor(int x, int y, int ch, const TCODColor& col); //default constructor
-	void render() const;
+	Actor(int x, int y, char ch); // constructor
+	void render(RenderWindow* console) const;
 };
