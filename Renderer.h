@@ -1,0 +1,27 @@
+#pragma once
+#include <libtcod.hpp>
+#include <SDL.h> //SDL2 renderer
+class RenderWindow {
+public:
+    void init(int argc, char* argv[]);
+    
+    void print(int x, int y, std::string text, TCOD_color_t* foreground, TCOD_color_t* background, TCOD_bkgnd_flag_t flag) {
+        tcod::print(*console, x, y, text, foreground, background, flag, TCOD_LEFT);
+    }
+    void print(int x, int y, std::string text, TCOD_color_t* foreground, TCOD_color_t* background) {
+        tcod::print(*console, x, y, text, foreground, background, TCOD_BKGND_SET, TCOD_LEFT);
+    }
+    void print(int x, int y, std::string text) {
+        tcod::print(*console, x, y, text, nullptr, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
+    }
+    void clear() {
+        TCOD_console_clear(console.get());
+    }
+    void update() {
+        context->present(*console); // Updates the visible display.
+    }
+
+private:
+    tcod::ContextPtr context;
+    tcod::ConsolePtr console;
+};
