@@ -1,10 +1,5 @@
 #include "Hero.h"
 
-int Hero::getHP()
-{
-	return HP;
-}
-
 int Hero::getEXP()
 {
 	return EXP;
