@@ -178,6 +178,7 @@
     <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Hero.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
