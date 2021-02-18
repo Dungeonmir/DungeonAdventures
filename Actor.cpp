@@ -1,7 +1,8 @@
 #include "Actor.h"
 
-Actor::Actor(int x, int y, char ch, TCOD_color_t* color) 
-	: x(x), y(y),  ch(ch), color(color) {
+Actor::Actor(int x, int y, char ch,int maxHP, TCOD_color_t* color) 
+	: x(x), y(y),  ch(ch), color(color), maxHP(maxHP), HP(maxHP){
+	
 }
 
 void Actor::render(RenderWindow* console) const {
@@ -12,6 +13,10 @@ void Actor::render(RenderWindow* console) const {
 int Actor::getHP()
 {
 	return HP;
+}
+int Actor::getMaxHP()
+{
+	return maxHP;
 }
 void Actor::setHP(int HP_p)
 {

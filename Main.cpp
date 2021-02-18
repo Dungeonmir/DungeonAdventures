@@ -10,25 +10,30 @@
 #include "Map.h" // Заголовочный файл Карты
 #include "Renderer.h"
 #include "Actor.h"
-
+#include "Interface.h"
+#include "Hero.h"
 int main(int argc, char* argv[]) {
     
     
     RenderWindow console;
-    console.init(argc,argv);
+    console.init(argc,argv, 60, 40);
     
         Map level1(80, 50);
         TCOD_color_t* hero_color = new TCOD_color_t{ 200, 200, 0 };
-        Actor hero(8, 5, 'H', hero_color);
-
-
+        Hero hero(8, 5, 'H', hero_color,10,0,0);
+        Interface Interface;
+        SDL_Event event;
         while (!TCODConsole::isWindowClosed()) {
 
-            SDL_Event event;
+            
             while (SDL_PollEvent(&event) != 0) {
                 switch (event.key.keysym.sym) {
+                case SDLK_h:
+                    hero.setHP(hero.getHP() - 1);
+                    break;
                 case SDLK_ESCAPE:
                     return 0;
+                    break;
                 }
             }
 
@@ -38,7 +43,7 @@ int main(int argc, char* argv[]) {
             hero.render(&console);
             
             console.print(0, 0, "Here it is. The code ////");
-            
+            Interface.render(&console,hero.getMaxHP(),hero.getHP(), hero.getMP(), hero.getEXP());
             console.update();
             
         }

@@ -34,7 +34,7 @@ void Map::render(RenderWindow* console) const
             TCOD_color_t wall_col = {0, 120, 40};
             TCOD_color_t* wall_col_p = &wall_col;
 
-            console->print(x, y, "-",nullptr,isWall(x,y) ? wall_col_p : back_p);
+            console->print(x, y, " ",nullptr,isWall(x,y) ? wall_col_p : back_p);
 
         }
     }

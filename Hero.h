@@ -5,6 +5,7 @@
 
 class Hero : public Actor {
 public:
+	Hero(int x, int y, char ch, TCOD_color_t* color, int HP, int MP, int EXP);
 	int getEXP();
 	int getMP();
 	void setEXP(int EXP_p);

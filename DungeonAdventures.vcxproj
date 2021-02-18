@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="map.cpp" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />

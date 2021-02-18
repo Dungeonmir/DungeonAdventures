@@ -1,5 +1,13 @@
 #include "Hero.h"
 
+Hero::Hero(int x, int y, char ch, TCOD_color_t* color, int HP, int MP_p, int EXP_p)
+	:Actor(x, y, ch, HP, color) 
+{
+	MP = MP_p;
+	EXP = EXP_p;
+
+	
+}
 int Hero::getEXP()
 {
 	return EXP;
