@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
         
         while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+            if (event.type == SDL_KEYDOWN)
             {
                 switch (event.key.keysym.sym) {
                 case SDLK_w:

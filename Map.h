@@ -6,7 +6,7 @@ struct Tile {
     Tile() : canWalk(false) {}
 };
 static const int ROOM_MAX_SIZE = 10;
-static const int ROOM_MIN_SIZE = 4;
+static const int ROOM_MIN_SIZE = 9;
 class Map 
 {
 public:
