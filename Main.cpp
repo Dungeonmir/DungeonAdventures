@@ -18,7 +18,10 @@ int main(int argc, char* argv[]) {
     console.init(argc,argv);
     
         Map level1(80, 50);
-        Actor hero(8, 5, 'H');
+        TCOD_color_t* hero_color = new TCOD_color_t{ 200, 200, 0 };
+        Actor hero(8, 5, 'H', hero_color);
+
+
         while (!TCODConsole::isWindowClosed()) {
 
             SDL_Event event;

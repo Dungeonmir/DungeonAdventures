@@ -5,8 +5,12 @@ class Actor {
 public:
 	int x, y; // actor position
 	char ch;  // character symbol
-	TCODColor color;
+	int getHP();
+	void setHP(int HP_p);
+	TCOD_color_t* color;
 
-	Actor(int x, int y, char ch); // constructor
+	Actor(int x, int y, char ch, TCOD_color_t* color); // constructor
 	void render(RenderWindow* console) const;
+private:
+	int HP; // Health points
 };

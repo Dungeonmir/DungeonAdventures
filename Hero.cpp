@@ -1,10 +1,5 @@
 #include "Hero.h"
 
-int Hero::getHP()
-{
-	return HP;
-}
-
 int Hero::getEXP()
 {
 	return EXP;
@@ -13,11 +8,6 @@ int Hero::getEXP()
 int Hero::getMP()
 {
 	return MP;
-}
-
-void Hero::setHP(int HP_p)
-{
-	HP = HP_p;
 }
 
 void Hero::setEXP(int EXP_p)

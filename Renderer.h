@@ -19,9 +19,9 @@ public:
         tcod::print(*console, x, y, text, nullptr, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
     }
     /*Print char*/
-    void print(int x, int y, char ch) {
+    void print(int x, int y, char ch, TCOD_color_t* foreground) {
         std::string str(1, ch);
-        tcod::print(*console, x, y, str, nullptr, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
+        tcod::print(*console, x, y, str, foreground, nullptr, TCOD_BKGND_NONE, TCOD_LEFT);
     }
     void clear() {
         TCOD_console_clear(console.get());
