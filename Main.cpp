@@ -1,63 +1,84 @@
 ﻿#define NOMINMAX
-#include <libtcod.hpp>
-#include "soloud.h" // Отвечает за музыку
-#include "soloud_thread.h"
-#include "soloud_wav.h" 
-#include "Map.h" // Заголовочный файл Карты
+
 #include <stdlib.h> // Для ESC
 #include <iostream>
+#include <libtcod.hpp>
+#include <SDL.h> //SDL2 renderer
+#undef main // !DANGER SDL.h has conflict with SDL_main.h!
 
-int main() {
-    SoLoud::Soloud soloud;  // SoLoud engine core
-    SoLoud::Wav gWave;      // One wave file
-    soloud.init();
-    gWave.load("audio/darlsouls.ogg"); // Load a wave
-    soloud.play(gWave); // Play the wave
 
-    int playerx = 40, playery = 25;
-    TCODConsole::initRoot(80, 50, "DyabloLR", false);
-    Map level1(80, 50);
+#include "Map.h" // Заголовочный файл Карты
+#include "Renderer.h"
+#include "Actor.h"
+#include "Interface.h"
+#include "Hero.h"
+int main(int argc, char* argv[]) {
+    
+    
+    RenderWindow console;
+    console.init(argc,argv, 60, 40);
+    
+    Map level1(60, 40);
+    TCOD_color_t* hero_color = new TCOD_color_t{ 200, 200, 0 };
+    Hero hero(level1.getHeroX(), level1.getHeroY(), 'H', hero_color,10,0,0);
+        
+    Interface Interface;
+    SDL_Event event;
     while (!TCODConsole::isWindowClosed()) {
 
-    TCOD_key_t key;
-    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
-    switch (key.vk) {
-        case TCODK_UP: 
-            if (!level1.isWall(playerx, playery - 1))
+        
+        while (SDL_PollEvent(&event) != 0) {
+            if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
             {
-                playery--;
+                switch (event.key.keysym.sym) {
+                case SDLK_w:
+                    if (level1.isWall(hero.x, hero.y - 1))
+                    {
+
+                    }
+                    else hero.y--;
+                    break;
+                case SDLK_a:
+                    if (level1.isWall(hero.x - 1, hero.y))
+                    {
+
+                    }
+                    else hero.x--;
+                    break;
+                case SDLK_s:
+                    if (level1.isWall(hero.x, hero.y + 1))
+                    {
+
+                    }
+                    else hero.y++;
+                    break;
+                case SDLK_d:
+                    if (level1.isWall(hero.x + 1, hero.y))
+                    {
+
+                    }
+                    else hero.x++;
+                    break;
+                case SDLK_h:
+                    hero.setHP(hero.getHP() - 1);
+                    break;
+                case SDLK_ESCAPE:
+                    return 0;
+                    break;
+                }
             }
-            break;
-        case TCODK_DOWN:
-            if (!level1.isWall(playerx, playery + 1))
-            {
-                playery++;
-            }
-            break;
-        case TCODK_LEFT:
-            if (!level1.isWall(playerx - 1,playery))
-            {
-                playerx--;
-            }
-               
-            break;
-        case TCODK_RIGHT:
-            if (!level1.isWall(playerx + 1, playery))
-            {
-                playerx++;
-            }
-            break;
-        case TCODK_ESCAPE:
-            exit(0);
-            default:break;
-            }
-            TCODConsole::root->clear();
-            level1.render();
             
-            TCODConsole::root->putChar(playerx, playery, '@');
-
-            TCODConsole::flush();
         }
-        return 0;
-    }
 
+        console.clear();
+        level1.render(&console);
+        
+        hero.render(&console);
+        
+        console.print(0, 0, "Work in progress...");
+        Interface.render(&console,hero.getMaxHP(),hero.getHP(), hero.getMP(), hero.getEXP());
+        console.update();
+        
+    }
+    return 0;
+}
