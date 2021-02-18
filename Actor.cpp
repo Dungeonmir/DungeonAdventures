@@ -9,7 +9,3 @@ void Actor::render(RenderWindow* console) const {
 	console->print(x, y, ch);
 	//need to add character color
 }
-int Actor::getHP()
-{
-	return HP;
-}
