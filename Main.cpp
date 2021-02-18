@@ -28,6 +28,34 @@ int main(int argc, char* argv[]) {
             
             while (SDL_PollEvent(&event) != 0) {
                 switch (event.key.keysym.sym) {
+                case SDLK_w:
+                    if (level1.isWall(hero.x, hero.y-1))
+                    {
+
+                    }
+                    else hero.y--;
+                    break;
+                case SDLK_a:
+                    if (level1.isWall(hero.x-1, hero.y))
+                    {
+
+                    }
+                    else hero.x--;
+                    break;
+                case SDLK_s:
+                    if (level1.isWall(hero.x, hero.y + 1))
+                    {
+
+                    }
+                    else hero.y++;
+                    break;
+                case SDLK_d:
+                    if (level1.isWall(hero.x + 1, hero.y))
+                    {
+
+                    }
+                    else hero.x++;
+                    break;
                 case SDLK_h:
                     hero.setHP(hero.getHP() - 1);
                     break;
