@@ -7,6 +7,8 @@ public:
 	char ch;  // character symbol
 	int getHP();
 	int getMaxHP();
+	int getGold();
+	void setGold(int Gold_p);
 	void setHP(int HP_p);
 	TCOD_color_t* color;
 
@@ -15,4 +17,5 @@ public:
 private:
 	int HP; // Health points
 	int maxHP;
+	int Gold;
 };

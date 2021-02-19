@@ -14,11 +14,12 @@
 #include "Hero.h"
 int main(int argc, char* argv[]) {
     
-    
+    int consoleX = 60;
+    int consoleY = 40;
     RenderWindow console;
-    console.init(argc,argv, 60, 40);
+    console.init(argc,argv, consoleX, consoleY);
     
-    Map level1(60, 40);
+    Map level1(consoleX-4, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 200, 200, 0 };
     Hero hero(level1.getHeroX(), level1.getHeroY(), 'H', hero_color,10,0,0);
         
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]) {
         hero.render(&console);
         
         console.print(0, 0, "Work in progress...");
-        Interface.render(&console,hero.getMaxHP(),hero.getHP(), hero.getMP(), hero.getEXP());
+        Interface.render(&console,hero.getMaxHP(),hero.getHP(), hero.getMP(), hero.getEXP(), hero.getGold());
         console.update();
         
     }
