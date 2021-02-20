@@ -13,14 +13,14 @@
 #include "Interface.h"
 #include "Hero.h"
 int main(int argc, char* argv[]) {
-    
+    bool computeFov = true;
     int consoleX = 60;
     int consoleY = 40;
     RenderWindow console;
     console.init(argc,argv, consoleX, consoleY);
     
     Map level1(consoleX-4, consoleY);
-    TCOD_color_t* hero_color = new TCOD_color_t{ 200, 200, 0 };
+    TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
     Hero hero(level1.getHeroX(), level1.getHeroY(), 'H', hero_color,10,0,0);
         
     Interface Interface;
@@ -33,32 +33,40 @@ int main(int argc, char* argv[]) {
             {
                 switch (event.key.keysym.sym) {
                 case SDLK_w:
+                    computeFov = true;
                     if (level1.isWall(hero.x, hero.y - 1))
                     {
 
                     }
                     else hero.y--;
+                    
                     break;
                 case SDLK_a:
+                    computeFov = true;
                     if (level1.isWall(hero.x - 1, hero.y))
                     {
 
                     }
                     else hero.x--;
+                    
                     break;
                 case SDLK_s:
+                    computeFov = true;
                     if (level1.isWall(hero.x, hero.y + 1))
                     {
 
                     }
                     else hero.y++;
+                    
                     break;
                 case SDLK_d:
+                    computeFov = true;
                     if (level1.isWall(hero.x + 1, hero.y))
                     {
 
                     }
                     else hero.x++;
+                    
                     break;
                 case SDLK_h:
                     hero.setHP(hero.getHP() - 1);
@@ -67,7 +75,12 @@ int main(int argc, char* argv[]) {
                     return 0;
                     break;
                 }
+                if (computeFov) {
+                    level1.computeFov(hero.x, hero.y);
+                    computeFov = false;
+                }
             }
+            
             
         }
 
