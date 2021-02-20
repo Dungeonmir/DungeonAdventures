@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 
-void RenderWindow::init(int argc, char* argv[], int x, int y)
+void RenderWindow::init(int x, int y)
 {
     consoleX = x;
     consoleY = y;
@@ -13,8 +13,6 @@ void RenderWindow::init(int argc, char* argv[], int x, int y)
     params.rows = console->h;
     params.renderer_type = TCOD_RENDERER_SDL2;
     params.vsync = true;
-    params.argc = argc; // This allows some user-control of the context.
-    params.argv = argv;
     context = tcod::new_context(params);
 }
 

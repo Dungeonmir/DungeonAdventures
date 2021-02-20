@@ -1,6 +1,9 @@
 #pragma once
 #include "libtcod.hpp"
 #include "Renderer.h"
+#include "Actor.h"
+#include "Engine.h"
+#include "Hero.h"
 struct Tile {
     bool explored; // has the player already seen this tile ?
     Tile() : explored(false) {}
@@ -8,9 +11,8 @@ struct Tile {
 
 static const int ROOM_MAX_SIZE = 10;
 static const int ROOM_MIN_SIZE = 6;
-static const int FOV_RADIUS = 6;
-class Map 
-{
+static const int FOV_RADIUS = 7;
+class Map {
 public:
     bool isInFov(int x, int y) const;
     bool isExplored(int x, int y) const;
