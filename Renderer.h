@@ -3,7 +3,7 @@
 #include <SDL.h> //SDL2 renderer
 class RenderWindow {
 public:
-    void init(int argc, char* argv[], int x, int y);
+    void init( int x, int y);
 
     ~RenderWindow() {
         context.release();

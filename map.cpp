@@ -31,6 +31,7 @@ public:
 Map::Map(int width, int height)
     :width(width), height(height) 
 {
+    map = new TCODMap(width, height);
     tiles = new Tile[width * height];
     TCODBsp bsp(0, 0, width, height);
     bsp.splitRecursive(NULL, 8, ROOM_MAX_SIZE, ROOM_MAX_SIZE, 1.5f, 1.5f);
@@ -41,18 +42,27 @@ Map::Map(int width, int height)
 Map::~Map() 
 {
     delete[] tiles;
+    delete map;
 }
 
 bool Map::isWall(int x, int y) const 
 {
-    return !tiles[x + y * width].canWalk;
+    return !map->isWalkable(x,y);
 }
 
-void Map::setWall(int x, int y) 
-{
-    tiles[x + y * width].canWalk = false;
+bool Map::isExplored(int x, int y) const {
+    return tiles[x + y * width].explored;
 }
-
+bool Map::isInFov(int x, int y) const {
+    if (map->isInFov(x, y)) {
+        tiles[x + y * width].explored = true;
+        return true;
+    }
+    return false;
+}
+void Map::computeFov(int HeroX_p, int HeroY_p) {
+    map->computeFov(HeroX_p, HeroY_p,FOV_RADIUS);
+}
 int Map::getHeroX()
 {
     return HeroX;
@@ -76,7 +86,7 @@ void Map::dig(int x1, int y1, int x2, int y2) {
     }
     for (int tilex = x1; tilex <= x2; tilex++) {
         for (int tiley = y1; tiley <= y2; tiley++) {
-            tiles[tilex + tiley * width].canWalk = true;
+            map->setProperties(tilex, tiley, true, true);
         }
     }
 }
@@ -97,18 +107,17 @@ void Map::createRoom(bool first, int x1, int y1, int x2, int y2) {
 
 void Map::render(RenderWindow* console) const 
 {
-
     for (int x = 0; x < width; x++)
     {
         for (int y = 0; y < height; y++) 
         {
-            TCOD_color_t back_col = {100,100,100};
-            TCOD_color_t* back_p = &back_col;
-            TCOD_color_t wall_col = {50, 50, 50};
-            TCOD_color_t* wall_col_p = &wall_col;
-
-            console->print(x, y, " ",nullptr,isWall(x,y) ? wall_col_p : back_p);
-
+            
+            if (isInFov(x, y)) {
+                console->print(x, y, " ", nullptr, isWall(x, y) ? wall_col : back_col);
+            }
+            else if (isExplored(x, y)) {
+                console->print(x, y, " ", nullptr, isWall(x, y) ? seen_wall_col : seen_back_col);
+            }
         }
     }
 }
