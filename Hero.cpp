@@ -1,7 +1,7 @@
 #include "Hero.h"
 
-Hero::Hero(int x, int y, char ch, TCOD_color_t* color, int HP, int MP_p, int EXP_p)
-	:Actor(x, y, ch, HP, color) 
+Hero::Hero(int x, int y, char ch,std::string name, TCOD_color_t* color, int HP, int MP_p, int EXP_p)
+	:Actor(x, y, ch, name, HP, color) 
 {
 	MP = MP_p;
 	EXP = EXP_p;

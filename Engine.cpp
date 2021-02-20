@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-
+Engine engine;
 Engine::Engine() {
     int consoleX = 60;
     int consoleY = 40;
@@ -8,7 +8,8 @@ Engine::Engine() {
     console->init(consoleX, consoleY);
     map = new Map(consoleX - 4, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
-    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H', hero_color, 10, 0, 0);
+    std::string player_name= "Player";
+    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 10, 0, 0);
     interface = new Interface;
 }
 Engine::~Engine() {
@@ -18,10 +19,7 @@ Engine::~Engine() {
 void Engine::update() {
     bool computeFov = true;
     SDL_Event event;
-    while (!TCODConsole::isWindowClosed()) {
-
-
-        while (SDL_PollEvent(&event) != 0) {
+    while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_KEYDOWN)
             {
                 switch (event.key.keysym.sym) {
@@ -74,7 +72,7 @@ void Engine::update() {
             }
 
 
-        }
+        
 
         console->clear();
         map->render(console);
@@ -88,10 +86,8 @@ void Engine::update() {
     }
 }
 void Engine::render() {
+    
     console->clear();
+    
     map->render(console);
-    for (Actor** iterator = actors.begin(); iterator != actors.end(); iterator++) 
-    {
-        (*iterator)->render(console);
-    }
     }

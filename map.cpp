@@ -100,7 +100,16 @@ void Map::createRoom(bool first, int x1, int y1, int x2, int y2) {
     }
     else 
     {
-
+        TCODRandom* rng = TCODRandom::getInstance();
+        int nbMonsters = rng->getInt(0, MAX_ROOM_MONSTERS);
+        while (nbMonsters > 0) {
+            int x = rng->getInt(x1, x2);
+            int y = rng->getInt(y1, y2);
+            if (canWalk(x, y)) {
+                addMonster(x, y);
+            }
+            nbMonsters--;
+        }
     }
     
 }
@@ -117,7 +126,42 @@ void Map::render(RenderWindow* console) const
             }
             else if (isExplored(x, y)) {
                 console->print(x, y, " ", nullptr, isWall(x, y) ? seen_wall_col : seen_back_col);
+                for (Actor** iterator = engine.actors.begin(); iterator != engine.actors.end(); iterator++)
+                {
+                    if (isExplored((*iterator)->x, (*iterator)->y))
+                    {
+                        (*iterator)->render(console);
+                    }
+                }
             }
         }
+    }
+}
+
+bool Map::canWalk(int x, int y) const {
+    if (isWall(x, y)) {
+        // this is a wall
+        return false;
+    }
+    for (Actor** iterator = engine.actors.begin();
+        iterator != engine.actors.end(); iterator++) {
+        Actor* actor = *iterator;
+        if (actor->x == x && actor->y == y) {
+            // there is an actor there. cannot walk
+            return false;
+        }
+    }
+    return true;
+}
+
+void Map::addMonster(int x, int y) {
+    TCODRandom* rng = TCODRandom::getInstance();
+    if (rng->getInt(0, 100) < 80) {
+        // create an orc
+        engine.actors.push(new Actor(x, y, 'o', "orc",2, orc_col));
+    }
+    else {
+        // create a troll
+        engine.actors.push(new Actor(x, y, 'T', "troll",5, orc_col));
     }
 }
