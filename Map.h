@@ -28,8 +28,10 @@ public:
     int getHeroX();
     int getHeroY();
 protected:
-    TCOD_color_t* back_col = new TCOD_color_t{ 150,200,150 };
-    TCOD_color_t* wall_col = new TCOD_color_t{ 50, 100, 50 };
+    TCOD_color_t* cons_back_col = new TCOD_color_t{ 200,200,0 };
+    TCOD_color_t* cons_wall_col = new TCOD_color_t{ 200, 100, 0 };
+    TCOD_color_t* back_col = new TCOD_color_t{ 200,200,0 };
+    TCOD_color_t* wall_col = new TCOD_color_t{ 200, 100, 0 };
     TCOD_color_t* seen_back_col = new TCOD_color_t{ 100,150,100 };
     TCOD_color_t* seen_wall_col = new TCOD_color_t{ 50, 100, 50 };
     TCOD_color_t* orc_col = new TCOD_color_t{ 140,104,100 };
