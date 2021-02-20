@@ -11,7 +11,7 @@ struct Tile {
 
 static const int ROOM_MAX_SIZE = 10;
 static const int ROOM_MIN_SIZE = 6;
-static const int FOV_RADIUS = 7;
+static const int FOV_RADIUS = 12;
 class Map {
 public:
     bool isInFov(int x, int y) const;
