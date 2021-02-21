@@ -123,16 +123,17 @@ void Map::render(RenderWindow* console) const
             
             if (isInFov(x, y)) {
                 console->print(x, y, " ", nullptr, isWall(x, y) ? wall_col : back_col);
-            }
-            else if (isExplored(x, y)) {
-                console->print(x, y, " ", nullptr, isWall(x, y) ? seen_wall_col : seen_back_col);
                 for (Actor** iterator = engine.actors.begin(); iterator != engine.actors.end(); iterator++)
                 {
-                    if (isExplored((*iterator)->x, (*iterator)->y))
+                    if (isInFov((*iterator)->x, (*iterator)->y))
                     {
                         (*iterator)->render(console);
                     }
                 }
+            }
+            else if (isExplored(x, y)) {
+                console->print(x, y, " ", nullptr, isWall(x, y) ? seen_wall_col : seen_back_col);
+                
             }
         }
     }
