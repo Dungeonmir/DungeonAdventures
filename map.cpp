@@ -142,7 +142,15 @@ void Map::render(RenderWindow* console) const
             TCOD_color_t Light = engine.shader->getLightColor(x, y);
             TCOD_color_t cellCol = TCOD_color_lerp(*t_dark, *t_light, engine.gammaLookup[Light.r] / 255.0f);
             console->print(x,y, std::string(" "),nullptr, &cellCol);
-            
+            for (Actor** iterator = engine.actors.begin(); iterator != engine.actors.end(); iterator++)
+            {
+                TCOD_color_t light = engine.shader->getLightColor((*iterator)->x, (*iterator)->y);
+                if (light.r>0)
+                {
+                    (*iterator)->render(console);
+                }
+            }
+
         }
     }
 }
