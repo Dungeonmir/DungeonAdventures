@@ -12,7 +12,7 @@ struct Tile {
 static const int ROOM_MAX_SIZE = 10;
 static const int ROOM_MIN_SIZE = 6;
 static const int MAX_ROOM_MONSTERS = 3;
-static const int FOV_RADIUS = 12;
+static const int FOV_RADIUS = 15;
 class Map {
 public:
     Map(int width, int height);
@@ -27,11 +27,13 @@ public:
     int width, height;
     int getHeroX();
     int getHeroY();
+    TCODMap* getMap();
 protected:
-    TCOD_color_t* cons_back_col = new TCOD_color_t{ 200,200,0 };
-    TCOD_color_t* cons_wall_col = new TCOD_color_t{ 200, 100, 0 };
-    TCOD_color_t* back_col = new TCOD_color_t{ 200,200,0 };
-    TCOD_color_t* wall_col = new TCOD_color_t{ 200, 100, 0 };
+    
+    TCOD_color_t* lightGround = new TCOD_color_t{ 200, 150, 30 };
+    TCOD_color_t* darkGround = new TCOD_color_t{ 0, 0, 50 };
+    TCOD_color_t* darkWall = new TCOD_color_t{ 0, 0, 50 };
+    TCOD_color_t* lightWall = new TCOD_color_t{ 150, 150, 150 };
     TCOD_color_t* seen_back_col = new TCOD_color_t{ 100,150,100 };
     TCOD_color_t* seen_wall_col = new TCOD_color_t{ 50, 100, 50 };
     TCOD_color_t* orc_col = new TCOD_color_t{ 140,104,100 };

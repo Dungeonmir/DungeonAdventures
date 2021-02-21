@@ -73,6 +73,11 @@ int Map::getHeroY()
     return HeroY;
 }
 
+TCODMap* Map::getMap()
+{
+    return map;
+}
+
 void Map::dig(int x1, int y1, int x2, int y2) {
     if (x2 < x1) {
         int tmp = x2;
@@ -120,21 +125,24 @@ void Map::render(RenderWindow* console) const
     {
         for (int y = 0; y < height; y++) 
         {
+            TCOD_color_t* t_dark, *t_light;
+            // get the cell dark and lit colors
+            if (map->isWalkable(x, y)) {
+                t_dark = darkGround;
+                t_light = lightGround;
+            }
+            else {
+                t_dark = darkWall;
+                t_light = lightWall;
+            }
+            // render left map
+            // hack : for a better look, lights are white and we only use them as
+            // a lerp coefficient between dark and light colors.
+            // a true light model would multiply the light color with the cell color
+            TCOD_color_t Light = engine.shader->getLightColor(x, y);
+            TCOD_color_t cellCol = TCOD_color_lerp(*t_dark, *t_light, engine.gammaLookup[Light.r] / 255.0f);
+            console->print(x,y, std::string(" "),nullptr, &cellCol);
             
-            if (isInFov(x, y)) {
-                console->print(x, y, " ", nullptr, isWall(x, y) ? wall_col : back_col);
-                for (Actor** iterator = engine.actors.begin(); iterator != engine.actors.end(); iterator++)
-                {
-                    if (isInFov((*iterator)->x, (*iterator)->y))
-                    {
-                        (*iterator)->render(console);
-                    }
-                }
-            }
-            else if (isExplored(x, y)) {
-                console->print(x, y, " ", nullptr, isWall(x, y) ? seen_wall_col : seen_back_col);
-                
-            }
         }
     }
 }
