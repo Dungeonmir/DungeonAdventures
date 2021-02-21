@@ -175,7 +175,7 @@ void Map::addMonster(int x, int y) {
     TCODRandom* rng = TCODRandom::getInstance();
     if (rng->getInt(0, 100) < 80) {
         // create an orc
-        engine.actors.push(new Actor(x, y, 'o', "orc",2, orc_col));
+        engine.actors.push(new Actor(x, y, 'O', "orc",2, orc_col));
     }
     else {
         // create a troll

@@ -33,10 +33,10 @@ protected:
     TCOD_color_t* lightGround = new TCOD_color_t{ 200, 150, 30 };
     TCOD_color_t* darkGround = new TCOD_color_t{ 0, 0, 50 };
     TCOD_color_t* darkWall = new TCOD_color_t{ 0, 0, 50 };
-    TCOD_color_t* lightWall = new TCOD_color_t{ 150, 150, 150 };
+    TCOD_color_t* lightWall = new TCOD_color_t{ 100, 100, 120 };
     TCOD_color_t* seen_back_col = new TCOD_color_t{ 100,150,100 };
     TCOD_color_t* seen_wall_col = new TCOD_color_t{ 50, 100, 50 };
-    TCOD_color_t* orc_col = new TCOD_color_t{ 140,104,100 };
+    TCOD_color_t* orc_col = new TCOD_color_t{ 100,150,50 };
     TCODMap* map;
     Tile* tiles;
     friend class BspListener;

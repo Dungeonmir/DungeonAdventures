@@ -76,7 +76,7 @@ void Engine::update() {
 
                     break;
                 case SDLK_h:
-                    hero->setHP(hero->getHP() - 1);
+                    hero->setGold(hero->getGold() + 1);
                     break;
                 case SDLK_ESCAPE:
                     console->~RenderWindow();
