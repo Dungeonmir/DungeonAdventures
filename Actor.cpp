@@ -1,7 +1,7 @@
 #include "Actor.h"
 
-Actor::Actor(int x, int y, char ch,int maxHP, TCOD_color_t* color) 
-	: x(x), y(y),  ch(ch), color(color), maxHP(maxHP), HP(maxHP){
+Actor::Actor(int x, int y, char ch, std::string name,int maxHP, TCOD_color_t* color) 
+	: x(x), y(y),  ch(ch),name(name), color(color), maxHP(maxHP), HP(maxHP){
 	Gold = 0;
 }
 

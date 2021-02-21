@@ -9,8 +9,10 @@
 
 
 int main() {
-    Engine engine;
-    engine.update();
-    engine.render();
+    
+    while (true) {
+        engine.update();
+        engine.render();
+    }
     return 0;
 }

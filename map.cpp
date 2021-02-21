@@ -73,6 +73,11 @@ int Map::getHeroY()
     return HeroY;
 }
 
+TCODMap* Map::getMap()
+{
+    return map;
+}
+
 void Map::dig(int x1, int y1, int x2, int y2) {
     if (x2 < x1) {
         int tmp = x2;
@@ -100,7 +105,16 @@ void Map::createRoom(bool first, int x1, int y1, int x2, int y2) {
     }
     else 
     {
-
+        TCODRandom* rng = TCODRandom::getInstance();
+        int nbMonsters = rng->getInt(0, MAX_ROOM_MONSTERS);
+        while (nbMonsters > 0) {
+            int x = rng->getInt(x1, x2);
+            int y = rng->getInt(y1, y2);
+            if (canWalk(x, y)) {
+                addMonster(x, y);
+            }
+            nbMonsters--;
+        }
     }
     
 }
@@ -111,13 +125,60 @@ void Map::render(RenderWindow* console) const
     {
         for (int y = 0; y < height; y++) 
         {
-            
-            if (isInFov(x, y)) {
-                console->print(x, y, " ", nullptr, isWall(x, y) ? wall_col : back_col);
+            TCOD_color_t* t_dark, *t_light;
+            // get the cell dark and lit colors
+            if (map->isWalkable(x, y)) {
+                t_dark = darkGround;
+                t_light = lightGround;
             }
-            else if (isExplored(x, y)) {
-                console->print(x, y, " ", nullptr, isWall(x, y) ? seen_wall_col : seen_back_col);
+            else {
+                t_dark = darkWall;
+                t_light = lightWall;
             }
+            // render left map
+            // hack : for a better look, lights are white and we only use them as
+            // a lerp coefficient between dark and light colors.
+            // a true light model would multiply the light color with the cell color
+            TCOD_color_t Light = engine.shader->getLightColor(x, y);
+            TCOD_color_t cellCol = TCOD_color_lerp(*t_dark, *t_light, engine.gammaLookup[Light.r] / 255.0f);
+            console->print(x,y, std::string(" "),nullptr, &cellCol);
+            for (Actor** iterator = engine.actors.begin(); iterator != engine.actors.end(); iterator++)
+            {
+                TCOD_color_t light = engine.shader->getLightColor((*iterator)->x, (*iterator)->y);
+                if (light.r>0)
+                {
+                    (*iterator)->render(console);
+                }
+            }
+
         }
+    }
+}
+
+bool Map::canWalk(int x, int y) const {
+    if (isWall(x, y)) {
+        // this is a wall
+        return false;
+    }
+    for (Actor** iterator = engine.actors.begin();
+        iterator != engine.actors.end(); iterator++) {
+        Actor* actor = *iterator;
+        if (actor->x == x && actor->y == y) {
+            // there is an actor there. cannot walk
+            return false;
+        }
+    }
+    return true;
+}
+
+void Map::addMonster(int x, int y) {
+    TCODRandom* rng = TCODRandom::getInstance();
+    if (rng->getInt(0, 100) < 80) {
+        // create an orc
+        engine.actors.push(new Actor(x, y, 'o', "orc",2, orc_col));
+    }
+    else {
+        // create a troll
+        engine.actors.push(new Actor(x, y, 'T', "troll",5, orc_col));
     }
 }
