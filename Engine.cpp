@@ -14,6 +14,7 @@ Engine::Engine() {
     shader = new Shader;
     hero_light_id = shader->addLight(hero->x, hero->y, FOV_RADIUS, TCOD_white);
     shader->init(map->getMap());
+    map->handOutRandomGold();
     
     if (enableGammaCorrection) {
         for (int i = 0; i < 256; i++) {
@@ -56,7 +57,10 @@ void Engine::update() {
                 hero->setGold(hero->getGold() + 1);
                 break;
             case SDLK_ESCAPE:
+                
+                engine.~Engine();
                 console->~RenderWindow();
+                exit(0);
             }
             
             if (dx != 0 || dy != 0)
@@ -76,6 +80,7 @@ void Engine::update() {
 
             }
         }
+
 
 
 

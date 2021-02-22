@@ -4,13 +4,16 @@
 class Actor {
 public:
 	std::string name;
+	bool block = true;
 	int x, y; // actor position
 	char ch;  // character symbol
 	int getHP();
 	int getMaxHP();
 	int getGold();
+	void takeDamage(Actor* target, int damage);
 	void setGold(int Gold_p);
 	void setHP(int HP_p);
+	void die(Actor* actor);
 	int moveOrAttack(int x, int y);
 	TCOD_color_t* color;
 	void update();

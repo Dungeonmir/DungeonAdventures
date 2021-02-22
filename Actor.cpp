@@ -11,6 +11,11 @@ void Actor::render(RenderWindow* console) const {
 	console->print(x, y, ch, color);
 	//need to add character color
 }
+void Actor::die(Actor* actor) {
+	actor->block = false;
+	actor->ch = '+';
+	actor->color->operator==(TCOD_red);
+}
 int Actor::getHP()
 {
 	return HP;
@@ -22,6 +27,15 @@ int Actor::getMaxHP()
 int Actor::getGold()
 {
 	return Gold;
+}
+void Actor::takeDamage(Actor* target, int damage)
+{
+	target->HP -= damage;
+	if (target->HP <=0)
+	{
+		engine.hero->setGold(engine.hero->getGold()+ target->Gold);
+		die(target);
+	}
 }
 void Actor::setGold(int Gold_p)
 {
@@ -38,9 +52,8 @@ int Actor::moveOrAttack(int x, int y)
 	for (Actor **iterator=engine.actors.begin();
 		iterator != engine.actors.end(); iterator++) {
 		Actor *actor=*iterator;
-		if ( actor->x == x && actor->y ==y ) {
-			printf("The %s laughs at your puny efforts to attack him!\n",
-			actor->name);
+		if ( actor->x == x && actor->y ==y and actor->block == true) {
+			takeDamage(actor, 1);
 			return false;
 		}
 	}
@@ -53,7 +66,6 @@ void Actor::update() {
 	TCOD_color_t light = engine.shader->getLightColor(this->x, this->y);
 	if (light.r>0)
 	{
-		engine.hero->setHP(engine.hero->getHP()-1);
-		printf("The %s see you!\n", name);
+		//go to hero and beat him.
 	}
 }

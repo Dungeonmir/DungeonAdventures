@@ -17,6 +17,7 @@ class Map {
 public:
     Map(int width, int height);
     ~Map();
+    void handOutRandomGold();
     bool isInFov(int x, int y) const;
     bool isExplored(int x, int y) const;
     bool isWall(int x, int y) const;
@@ -28,6 +29,7 @@ public:
     int getHeroX();
     int getHeroY();
     TCODMap* getMap();
+    
 protected:
     
     TCOD_color_t* lightGround = new TCOD_color_t{ 200, 150, 30 };
