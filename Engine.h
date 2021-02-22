@@ -1,5 +1,6 @@
 #pragma once
 #include <libtcod.h>
+
 #include "Actor.h"
 #include "Engine.h"
 #include "Map.h" // Заголовочный файл Карты
@@ -12,6 +13,15 @@ class Interface;
 class Map;
 class Engine {
 public:
+	enum GameState
+	{
+		START, // start of the game
+		IDLE, // Nothing changed
+		UPDATE, // Updates monsters position
+		VICTORY, // You succesfully beat the monster
+		DEATH // YOU DIED!
+	};
+	GameState gameState;
 	TCODList<Actor*> actors;
 	RenderWindow* console;
 	Interface* interface;

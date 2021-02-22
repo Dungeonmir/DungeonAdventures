@@ -13,7 +13,7 @@ public:
 	void setHP(int HP_p);
 	int moveOrAttack(int x, int y);
 	TCOD_color_t* color;
-
+	void update();
 	Actor(int x, int y, char ch,std::string name, int maxHP, TCOD_color_t* color); // constructor
 	void render(RenderWindow* console) const;
 private:

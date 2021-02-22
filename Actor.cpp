@@ -48,3 +48,12 @@ int Actor::moveOrAttack(int x, int y)
 	this->y=y;
 	return true;
 }
+
+void Actor::update() {
+	TCOD_color_t light = engine.shader->getLightColor(this->x, this->y);
+	if (light.r>0)
+	{
+		engine.hero->setHP(engine.hero->getHP()-1);
+		printf("The %s see you!\n", name);
+	}
+}

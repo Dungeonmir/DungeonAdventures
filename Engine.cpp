@@ -1,7 +1,7 @@
 #include "Engine.h"
-
 Engine engine;
 Engine::Engine() {
+    gameState = START;
     int consoleX = 60;
     int consoleY = 40;
     console = new RenderWindow;
@@ -36,40 +36,48 @@ Engine::~Engine() {
 void Engine::update() {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_KEYDOWN)
-            {
-                int dx = 0, dy = 0;
-                switch (event.key.keysym.sym) {
-                case SDLK_w:
-                    dy = -1;
-                    break;
-                case SDLK_a:
-                    dx = -1;
-                    break;
-                case SDLK_s:
-                    dy = 1;
-                    break;
-                case SDLK_d:
-                    dx = 1;
-                    break;
-                case SDLK_h:
-                    hero->setGold(hero->getGold() + 1);
-                    break;
-                case SDLK_ESCAPE:
-                    console->~RenderWindow();
-                }
-                if (dx != 0 || dy != 0)
-                {
-                    //gameStatus = NEW_TURN;
-                    if (hero->moveOrAttack(hero->x + dx, hero->y + dy)) {
-                        shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    }
-                }
+        if (event.type == SDL_KEYDOWN)
+        {
+            int dx = 0, dy = 0;
+            switch (event.key.keysym.sym) {
+            case SDLK_w:
+                dy = -1;
+                break;
+            case SDLK_a:
+                dx = -1;
+                break;
+            case SDLK_s:
+                dy = 1;
+                break;
+            case SDLK_d:
+                dx = 1;
+                break;
+            case SDLK_h:
+                hero->setGold(hero->getGold() + 1);
+                break;
+            case SDLK_ESCAPE:
+                console->~RenderWindow();
             }
             
+            if (dx != 0 || dy != 0)
+            {
+                gameState = UPDATE;
+                if (hero->moveOrAttack(hero->x + dx, hero->y + dy)) {
+                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
+                }
+            }
+        }
+
+        if (gameState == UPDATE) {
+            for (Actor** iterator = actors.begin(); iterator != actors.end();
+                iterator++) {
+                Actor* actor = *iterator;
+                    actor->update();
+
+            }
+        }
 
 
-        
 
         console->clear();
         map->render(console);
@@ -79,6 +87,7 @@ void Engine::update() {
         console->update();
 
     }
+    gameState = IDLE;
 }
 void Engine::render() {
     
