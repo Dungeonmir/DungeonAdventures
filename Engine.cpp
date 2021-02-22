@@ -38,42 +38,19 @@ void Engine::update() {
     while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_KEYDOWN)
             {
+                int dx = 0, dy = 0;
                 switch (event.key.keysym.sym) {
                 case SDLK_w:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x, hero->y - 1))
-                    {
-
-                    }
-                    else hero->y--;
-
+                    dy = -1;
                     break;
                 case SDLK_a:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x - 1, hero->y))
-                    {
-
-                    }
-                    else hero->x--;
-
+                    dx = -1;
                     break;
                 case SDLK_s:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x, hero->y + 1))
-                    {
-
-                    }
-                    else hero->y++;
-
+                    dy = 1;
                     break;
                 case SDLK_d:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x + 1, hero->y))
-                    {
-
-                    }
-                    else hero->x++;
-
+                    dx = 1;
                     break;
                 case SDLK_h:
                     hero->setGold(hero->getGold() + 1);
@@ -81,8 +58,15 @@ void Engine::update() {
                 case SDLK_ESCAPE:
                     console->~RenderWindow();
                 }
-               
+                if (dx != 0 || dy != 0)
+                {
+                    //gameStatus = NEW_TURN;
+                    if (hero->moveOrAttack(hero->x + dx, hero->y + dy)) {
+                        shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
+                    }
+                }
             }
+            
 
 
         
