@@ -8,9 +8,18 @@ void Interface::render(RenderWindow* console)
 	TCOD_color_t* health_color = new TCOD_color_t{ 220, 0, 0 };
 	TCOD_color_t* unhealth_color = new TCOD_color_t{20, 0, 0 };
 	TCOD_color_t* dynamic_color = new TCOD_color_t{ 10, 0, 0 }; // colors
+	TCOD_color_t* interface_background= new TCOD_color_t{ 0, 0, 50 };
 	int indent = engine.interfaceIndent;
 	int x = console->getConsoleX() - indent;
 	int y = console->getConsoleY() - 1; // handy variables to arrange items of interface
+	for (int yy = y; yy >= 0 ; yy--)
+	{
+		for (int xx = indent; xx >= 0; xx--)
+		{
+			console->print(x + xx, yy, " ", nullptr, interface_background);
+		}
+		
+	}
 	for (int  i = engine.hero->getMaxHP(); i > 0; i--)
 	{
 		unhealth_color->r = unhealth_color->r + dynamic_color->r;

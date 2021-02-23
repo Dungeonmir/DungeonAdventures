@@ -10,7 +10,7 @@ Engine::Engine() {
     map = new Map(consoleX - interfaceIndent, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
     std::string player_name= "Player";
-    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 10,0.5f, 0, 0);
+    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 12,1.0f, 0, 0);
     interface = new Interface;
     shader = new Shader;
     hero_light_id = shader->addLight(hero->x, hero->y, FOV_RADIUS, TCOD_white);
@@ -55,11 +55,15 @@ void Engine::update() {
                 dx = 1;
                 break;
             case SDLK_h:
-                hero->setGold(hero->getGold() + 1);
+                if (hero->getGold() >=2)
+                {
+                    hero->setHP(hero->getHP() + 1);
+                    hero->setGold(hero->getGold() - 2);
+                }
+                
                 break;
             case SDLK_ESCAPE:
-                
-                engine.~Engine();
+                atexit(SDL_Quit);
                 console->~RenderWindow();
                 exit(0);
             }
@@ -80,6 +84,7 @@ void Engine::update() {
                     actor->update();
 
             }
+            
         }
 
 
