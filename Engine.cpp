@@ -1,19 +1,21 @@
 #include "Engine.h"
-
 Engine engine;
 Engine::Engine() {
-    int consoleX = 60;
-    int consoleY = 40;
+    gameState = START;
+    int consoleX = 80;
+    int consoleY = 45;
+    interfaceIndent = 10;
     console = new RenderWindow;
     console->init(consoleX, consoleY);
-    map = new Map(consoleX - 4, consoleY);
+    map = new Map(consoleX - interfaceIndent, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
     std::string player_name= "Player";
-    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 10, 0, 0);
+    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 12,1.0f, 0, 0);
     interface = new Interface;
     shader = new Shader;
     hero_light_id = shader->addLight(hero->x, hero->y, FOV_RADIUS, TCOD_white);
     shader->init(map->getMap());
+    map->handOutRandomGold();
     
     if (enableGammaCorrection) {
         for (int i = 0; i < 256; i++) {
@@ -31,70 +33,72 @@ Engine::Engine() {
 }
 Engine::~Engine() {
     actors.clearAndDelete();
-    delete map;
+    engine.map->~Map();
 }
 void Engine::update() {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_KEYDOWN)
-            {
-                switch (event.key.keysym.sym) {
-                case SDLK_w:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x, hero->y - 1))
-                    {
-
-                    }
-                    else hero->y--;
-
-                    break;
-                case SDLK_a:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x - 1, hero->y))
-                    {
-
-                    }
-                    else hero->x--;
-
-                    break;
-                case SDLK_s:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x, hero->y + 1))
-                    {
-
-                    }
-                    else hero->y++;
-
-                    break;
-                case SDLK_d:
-                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
-                    if (map->isWall(hero->x + 1, hero->y))
-                    {
-
-                    }
-                    else hero->x++;
-
-                    break;
-                case SDLK_h:
-                    hero->setHP(hero->getHP() - 1);
-                    break;
-                case SDLK_ESCAPE:
-                    console->~RenderWindow();
+        if (event.type == SDL_KEYDOWN)
+        {
+            int dx = 0, dy = 0;
+            switch (event.key.keysym.sym) {
+            case SDLK_w:
+                dy = -1;
+                break;
+            case SDLK_a:
+                dx = -1;
+                break;
+            case SDLK_s:
+                dy = 1;
+                break;
+            case SDLK_d:
+                dx = 1;
+                break;
+            case SDLK_h:
+                if (hero->getGold() >=2)
+                {
+                    hero->setHP(hero->getHP() + 1);
+                    hero->setGold(hero->getGold() - 2);
                 }
-               
+                
+                break;
+            case SDLK_ESCAPE:
+                atexit(SDL_Quit);
+                console->~RenderWindow();
+                exit(0);
             }
+            
+            if (dx != 0 || dy != 0)
+            {
+                gameState = UPDATE;
+                if (hero->moveOrAttack(hero->x + dx, hero->y + dy)) {
+                    shader->updateLight(hero_light_id, hero->x, hero->y, FOV_RADIUS, TCOD_white);
+                }
+            }
+        }
+
+        if (gameState == UPDATE) {
+            for (Actor** iterator = actors.begin(); iterator != actors.end();
+                iterator++) {
+                Actor* actor = *iterator;
+                    actor->update();
+
+            }
+            
+        }
 
 
-        
+
 
         console->clear();
         map->render(console);
         shader->computeLight();
         hero->render(console);
-        interface->render(console, hero->getMaxHP(), hero->getHP(), hero->getMP(), hero->getEXP(), hero->getGold());
+        interface->render(console);
         console->update();
 
     }
+    gameState = IDLE;
 }
 void Engine::render() {
     

@@ -6,8 +6,6 @@
 #include <SDL.h> //SDL2 renderer
 #undef main // !DANGER SDL.h has conflict with SDL_main.h!
 #include "Engine.h"
-
-
 int main() {
     
     while (true) {

@@ -5,7 +5,7 @@
 
 class Hero : public Actor {
 public:
-	Hero(int x, int y, char ch,std::string name, TCOD_color_t* color, int HP, int MP, int EXP);
+	Hero(int x, int y, char ch,std::string name, TCOD_color_t* color, float HP, float Attack, int MP, int EXP);
 	int getEXP();
 	int getMP();
 	void setEXP(int EXP_p);
