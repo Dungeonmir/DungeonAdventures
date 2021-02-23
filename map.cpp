@@ -175,11 +175,11 @@ void Map::addMonster(int x, int y) {
     TCODRandom* rng = TCODRandom::getInstance();
     if (rng->getInt(0, 100) < 90) {
         // create an orc
-        engine.actors.push(new Actor(x, y, 'O', "orc",2, orc_col));
+        engine.actors.push(new Actor(x, y, 'O', "orc",2,0.5f, orc_col));
     }
     else {
         // create a troll
-        engine.actors.push(new Actor(x, y, 'T', "troll",5, orc_col));
+        engine.actors.push(new Actor(x, y, 'T', "troll",5,1.5f, orc_col));
     }
 }
 void Map::handOutRandomGold() {

@@ -4,6 +4,6 @@
 
 class Interface {
 public:
-	void render(RenderWindow* console, int maxHP, int HP, int MP, int EXP, int Gold);
+	void render(RenderWindow* console);
 private:
 };

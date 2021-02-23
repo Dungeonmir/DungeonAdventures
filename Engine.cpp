@@ -2,14 +2,15 @@
 Engine engine;
 Engine::Engine() {
     gameState = START;
-    int consoleX = 60;
-    int consoleY = 40;
+    int consoleX = 80;
+    int consoleY = 45;
+    interfaceIndent = 10;
     console = new RenderWindow;
     console->init(consoleX, consoleY);
-    map = new Map(consoleX - 4, consoleY);
+    map = new Map(consoleX - interfaceIndent, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
     std::string player_name= "Player";
-    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 10, 0, 0);
+    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H',player_name, hero_color, 10,0.5f, 0, 0);
     interface = new Interface;
     shader = new Shader;
     hero_light_id = shader->addLight(hero->x, hero->y, FOV_RADIUS, TCOD_white);
@@ -32,7 +33,7 @@ Engine::Engine() {
 }
 Engine::~Engine() {
     actors.clearAndDelete();
-    delete map;
+    engine.map->~Map();
 }
 void Engine::update() {
     SDL_Event event;
@@ -88,7 +89,7 @@ void Engine::update() {
         map->render(console);
         shader->computeLight();
         hero->render(console);
-        interface->render(console, hero->getMaxHP(), hero->getHP(), hero->getMP(), hero->getEXP(), hero->getGold());
+        interface->render(console);
         console->update();
 
     }

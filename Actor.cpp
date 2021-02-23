@@ -1,39 +1,47 @@
 #include "Actor.h"
 #include "Engine.h"
 
-Actor::Actor(int x, int y, char ch, std::string name,int maxHP, TCOD_color_t* color) 
-	: x(x), y(y),  ch(ch),name(name), color(color), maxHP(maxHP), HP(maxHP){
+Actor::Actor(int x, int y, char ch, std::string name,float maxHP, float attack, TCOD_color_t* color) 
+	: x(x), y(y),  ch(ch),name(name), color(color), Attack(attack),maxHP(maxHP), HP(maxHP){
 	Gold = 0;
 }
 
 void Actor::render(RenderWindow* console) const {
-	
 	console->print(x, y, ch, color);
-	//need to add character color
+}
+void Actor::increaseAttack(float addition)
+{
+	Attack += addition;
 }
 void Actor::die(Actor* actor) {
 	actor->block = false;
-	actor->ch = '+';
-	actor->color->operator==(TCOD_red);
+	actor->ch = 'X';
 }
-int Actor::getHP()
+float Actor::getHP()
 {
 	return HP;
 }
-int Actor::getMaxHP()
+float Actor::getMaxHP()
 {
 	return maxHP;
+}
+float Actor::getAttack()
+{
+	return Attack;
 }
 int Actor::getGold()
 {
 	return Gold;
 }
-void Actor::takeDamage(Actor* target, int damage)
+void Actor::takeDamage(Actor* target, float damage)
 {
 	target->HP -= damage;
+	printf("Damage is: %f\n", damage);
+	printf("Monster hp: %f\n",target->HP);
 	if (target->HP <=0)
 	{
 		engine.hero->setGold(engine.hero->getGold()+ target->Gold);
+		engine.hero->increaseAttack(target->Attack/4);
 		die(target);
 	}
 }
@@ -53,7 +61,7 @@ int Actor::moveOrAttack(int x, int y)
 		iterator != engine.actors.end(); iterator++) {
 		Actor *actor=*iterator;
 		if ( actor->x == x && actor->y ==y and actor->block == true) {
-			takeDamage(actor, 1);
+			takeDamage(actor, engine.hero->getAttack());
 			return false;
 		}
 	}

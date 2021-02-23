@@ -13,6 +13,7 @@ class Interface;
 class Map;
 class Engine {
 public:
+	int interfaceIndent;
 	enum GameState
 	{
 		START, // start of the game
