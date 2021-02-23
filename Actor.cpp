@@ -69,7 +69,7 @@ int Actor::moveOrAttack(int x, int y)
 			takeDamage(actor, engine.hero->getAttack());
 			return false;
 		}
-		if (engine.hero->x == x && engine.hero->y == y && engine.hero->block ==true && this->block==true && this->name!="Player")
+		if (engine.hero->x == x && engine.hero->y == y && engine.hero->block ==true && this->block==true && this->name!="Player" && this->name != "chest")
 		{
 			int dx = x - this->x;
 			int dy = y - this->y;

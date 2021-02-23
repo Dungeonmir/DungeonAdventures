@@ -173,13 +173,19 @@ bool Map::canWalk(int x, int y) const {
 
 void Map::addMonster(int x, int y) {
     TCODRandom* rng = TCODRandom::getInstance();
-    if (rng->getInt(0, 100) < 90) {
+    int rand_int = rng->getInt(0, 100);
+    if (rand_int<90) {
         // create an orc
         engine.actors.push(new Actor(x, y, 'O', "orc",2,0.5f, orc_col));
     }
-    else {
+    if (rand_int >= 90 and rand_int <=95){
         // create a troll
         engine.actors.push(new Actor(x, y, 'T', "troll",5,1.5f, orc_col));
+    }
+    if (rand_int >95)
+    {
+        //create chest
+        engine.actors.push(new Actor(x, y, 'C', "chest",5,0.0f, chest_col));
     }
 }
 void Map::handOutRandomGold() {
@@ -187,6 +193,11 @@ void Map::handOutRandomGold() {
     for (Actor** iterator = engine.actors.begin();
         iterator != engine.actors.end(); iterator++) {
         Actor* actor = *iterator;
+        if (actor->name=="chest")
+        {
+            actor->setGold(rng->getInt(2, 10));
+        }
+        else
         actor->setGold(rng->getInt(0, 5));
     }
     
