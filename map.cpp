@@ -176,11 +176,11 @@ void Map::addMonster(int x, int y) {
     int rand_int = rng->getInt(0, 100);
     if (rand_int<90) {
         // create an orc
-        engine.actors.push(new Actor(x, y, 'O', "orc",2,0.5f, orc_col));
+        engine.actors.push(new Actor(x, y, 'O', "orc",1.5,0.5f, orc_col));
     }
     if (rand_int >= 90 and rand_int <=95){
         // create a troll
-        engine.actors.push(new Actor(x, y, 'T', "troll",5,1.5f, orc_col));
+        engine.actors.push(new Actor(x, y, 'T', "troll",4,1.0f, orc_col));
     }
     if (rand_int >95)
     {
@@ -198,7 +198,7 @@ void Map::handOutRandomGold() {
             actor->setGold(rng->getInt(2, 10));
         }
         else
-        actor->setGold(rng->getInt(0, 5));
+        actor->setGold(rng->getInt(1, 6));
     }
     
 }
