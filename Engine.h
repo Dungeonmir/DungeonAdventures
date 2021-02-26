@@ -34,6 +34,7 @@ public:
 	~Engine();
 	void update();
 	void render();
+	void newGame();
 
 	bool enableGammaCorrection = true;
 	int gammaLookup[256];
