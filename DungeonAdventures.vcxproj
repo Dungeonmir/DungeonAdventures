@@ -184,6 +184,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />

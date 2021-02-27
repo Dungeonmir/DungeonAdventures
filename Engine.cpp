@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "MainMenu.h"
 Engine engine;
 Engine::Engine() {
     gameState = START;
@@ -7,6 +8,8 @@ Engine::Engine() {
     interfaceIndent = 10;
     console = new RenderWindow;
     console->init(consoleX, consoleY);
+    // Место для перед консолью
+    MainMenu();
     map = new Map(consoleX - interfaceIndent, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
     std::string player_name= "Player";
@@ -65,6 +68,7 @@ void Engine::update() {
                 engine.newGame();
                 break;
             case SDLK_ESCAPE:
+
                 atexit(SDL_Quit);
                 console->~RenderWindow();
                 exit(0);
