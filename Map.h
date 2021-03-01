@@ -33,8 +33,8 @@ public:
 protected:
     
     TCOD_color_t* lightGround = new TCOD_color_t{ 200, 150, 30 };
-    TCOD_color_t* darkGround = new TCOD_color_t{ 0,0,50 };
-    TCOD_color_t* darkWall = new TCOD_color_t{ 0,0,50 };
+    TCOD_color_t* darkGround = new TCOD_color_t{ 0,0,20 };
+    TCOD_color_t* darkWall = new TCOD_color_t{ 0,0,20 };
     TCOD_color_t* lightWall = new TCOD_color_t{ 80, 80, 80 };
     TCOD_color_t* orc_col = new TCOD_color_t{ 70,120,40 };
     TCOD_color_t* chest_col = new TCOD_color_t{ 200,200,10 };

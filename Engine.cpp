@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "MainMenu.h"
 Engine engine;
 Engine::Engine() {
     gameState = START;
@@ -7,6 +8,8 @@ Engine::Engine() {
     interfaceIndent = 10;
     console = new RenderWindow;
     console->init(consoleX, consoleY);
+    // Место для перед консолью
+    MainMenu();
     map = new Map(consoleX - interfaceIndent, consoleY);
     TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
     std::string player_name= "Player";
@@ -55,20 +58,23 @@ void Engine::update() {
                 dx = 1;
                 break;
             case SDLK_h:
-                if (hero->getGold() >=2)
+                if (hero->getGold() >=2 && hero->getHP()>0)
                 {
                     hero->setHP(hero->getHP() + 1);
                     hero->setGold(hero->getGold() - 2);
                 }
-                
+                break;
+            case SDLK_n:
+                engine.newGame();
                 break;
             case SDLK_ESCAPE:
+
                 atexit(SDL_Quit);
                 console->~RenderWindow();
                 exit(0);
             }
             
-            if (dx != 0 || dy != 0)
+            if (dx != 0 || dy != 0 and hero->getHP()>0)
             {
                 gameState = UPDATE;
                 if (hero->moveOrAttack(hero->x + dx, hero->y + dy)) {
@@ -107,3 +113,18 @@ void Engine::render() {
     map->render(console);
     
     }
+
+void Engine::newGame()
+{
+    engine.actors.clearAndDelete();
+    engine.map->~Map();
+    map = new Map(engine.console->getConsoleX() - interfaceIndent, engine.console->getConsoleY());
+    TCOD_color_t* hero_color = new TCOD_color_t{ 100, 0, 100 };
+    std::string player_name = "Player";
+    hero = new Hero(map->getHeroX(), map->getHeroY(), 'H', player_name, hero_color, 12, 1.0f, 0, 0);
+    interface = new Interface;
+    shader = new Shader;
+    hero_light_id = shader->addLight(hero->x, hero->y, FOV_RADIUS, TCOD_white);
+    shader->init(map->getMap());
+    map->handOutRandomGold();
+}

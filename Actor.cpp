@@ -86,10 +86,10 @@ int Actor::moveOrAttack(int x, int y)
 				this->x += dx;
 				this->y += dy;
 			}
-			else if (engine.map->canWalk(this->x + stepdx, this->y and this->x + dx != x and this->y + dy != y)) {
+			else if (engine.map->canWalk(this->x + stepdx, this->y) and this->x + dx != x and this->y + dy != y) {
 				this->x += stepdx;
 			}
-			else if (engine.map->canWalk(this->x, this->y + stepdy and this->x + dx != x and this->y + dy != y)) {
+			else if (engine.map->canWalk(this->x, this->y + stepdy) and this->x + dx != x and this->y + dy != y) {
 				this->y += stepdy;
 			}
 			else if (distance<2 and this->HP>0)

@@ -5,7 +5,7 @@ void RenderWindow::init(int x, int y)
 {
     consoleX = x;
     consoleY = y;
-    TCOD_tileset_load_truetype_("font/RobotoSlab-Medium.ttf", 20, 20);
+    TCOD_tileset_load_truetype_("font/font.ttf", 20, 20);
     console = tcod::new_console(x, y);
     TCOD_ContextParams params = {}; //Struct for creating context
     params.tcod_version = TCOD_COMPILEDVERSION; // Required 
